@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { useState } from 'react';
+import ReactDOM, { createRoot } from 'react-dom/client';
+import Header from './header';
+import Footer  from './footer';
+import CreateNote  from './Note';
+import CreateArea from "./CreateArea";
+function App(){
+const [notes,setnotes]=useState([])
+function addnote(note){
+  setnotes(prevnotes=>{
+    return [...prevnotes,note]
+    
+  })
 }
+function deletenote(id){
+setnotes(prevnotes=>{
+  return prevnotes.filter((noteitem,index)=>{
+    return index!=id
+  })
+})
+}
+return (<div><Header />
+<CreateArea onAdd={addnote}/>
+{notes.map((noteitem,index)=>{
+  {
+    return <CreateNote key={index} id={index} title={noteitem.title} content={noteitem.content} ondelete={deletenote} />
+  }
+})}
+<Footer />
 
-export default App;
+</div>
+);
+}
+export default App
